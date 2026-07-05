@@ -9,7 +9,7 @@ export function MissionAbout() {
   return (
     <section id="mission" className="px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        {/* Centered intro paragraph (like vivekrs.in) */}
+        {/* Centered intro paragraph */}
         <SectionReveal>
           <div className="text-center">
             <p className="mx-auto max-w-3xl text-[22px] font-medium leading-[1.6] text-white/80 sm:text-[28px]">

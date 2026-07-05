@@ -91,7 +91,7 @@ export function Hero() {
       className="relative isolate min-h-screen overflow-hidden px-4 sm:px-6 lg:px-8"
       style={{ paddingTop: "calc(var(--menubar-height) + 60px)" }}
     >
-      {/* Ambient blue glow rings (like vivekrs.in) */}
+      {/* Ambient blue glow rings */}
       <div className="ambient-glow ambient-glow-1" />
       <div className="ambient-glow ambient-glow-2" />
       <div className="ambient-glow ambient-glow-3" />
