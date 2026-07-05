@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --ios-bg: #000000;
+  --ios-bg-secondary: #0d1117;
+  --ios-label: #FFFFFF;
+  --ios-label-secondary: rgba(235, 235, 245, 0.60);
+  --ios-label-tertiary: rgba(235, 235, 245, 0.30);
+  --ios-separator: rgba(84, 84, 88, 0.65);
+  --ios-accent: #0A84FF;
+  --menubar-height: 28px;
+  --dock-height: 70px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ios-bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10, 60, 160, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 60% 10%, rgba(80, 40, 180, 0.10), transparent 50%),
+    linear-gradient(180deg, #000000 0%, #030812 40%, #000000 100%);
+  color: var(--ios-label);
+  font-family:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "SF Pro Display", "SF Pro Text", "Segoe UI",
+    Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+::selection {
+  background: rgba(10, 132, 255, 0.4);
+  color: #ffffff;
+}
+
+/* ── macOS Menu Bar ── */
+.macos-menubar {
+  height: var(--menubar-height);
+  background: rgba(20, 20, 25, 0.78);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.macos-menubar-item {
+  position: relative;
+  cursor: default;
+  user-select: none;
+}
+
+.macos-menubar-dropdown {
+  position: absolute;
+  top: calc(var(--menubar-height) - 2px);
+  left: -4px;
+  min-width: 240px;
+  background: rgba(30, 30, 35, 0.95);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.macos-menubar-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.1s;
+  cursor: default;
+}
+
+.macos-menubar-dropdown-item:hover {
+  background: #0A84FF;
+  color: #fff;
+}
+
+.macos-menubar-dropdown-item .shortcut {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  margin-left: 24px;
+}
+
+.macos-menubar-dropdown-item:hover .shortcut {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.macos-menubar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 8px;
+}
+
+/* ── macOS Dock ── */
+.macos-dock {
+  background: rgba(30, 30, 35, 0.45);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 6px 10px;
+  box-shadow: var(--dock-shadow, 0 0 0 0.5px rgba(255,255,255,0.15), 0 8px 40px rgba(0,0,0,0.55));
+}
+
+.dock-item {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.dock-item:hover {
+  color: #fff;
+}
+
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 35, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #fff;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Frosted glass materials ── */
+.material-thin {
+  background: rgba(30, 30, 30, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.material-regular {
+  background: rgba(30, 30, 30, 0.72);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+}
+
+/* ── iOS Typography ── */
+.ios-large-title { font-size: 34px; font-weight: 700; letter-spacing: 0.37px; line-height: 1.18; }
+.ios-title1 { font-size: 28px; font-weight: 700; letter-spacing: 0.36px; line-height: 1.21; }
+.ios-title2 { font-size: 22px; font-weight: 700; letter-spacing: 0.35px; line-height: 1.27; }
+.ios-title3 { font-size: 20px; font-weight: 600; letter-spacing: 0.38px; line-height: 1.25; }
+.ios-headline { font-size: 17px; font-weight: 600; letter-spacing: -0.41px; line-height: 1.29; }
+.ios-body { font-size: 17px; font-weight: 400; letter-spacing: -0.41px; line-height: 1.53; }
+.ios-callout { font-size: 16px; font-weight: 400; letter-spacing: -0.32px; line-height: 1.31; }
+.ios-subheadline { font-size: 15px; font-weight: 400; letter-spacing: -0.24px; line-height: 1.33; }
+.ios-footnote { font-size: 13px; font-weight: 400; letter-spacing: -0.08px; line-height: 1.38; }
+.ios-caption1 { font-size: 12px; font-weight: 400; letter-spacing: 0px; line-height: 1.33; }
+.ios-caption2 { font-size: 11px; font-weight: 400; letter-spacing: 0.07px; line-height: 1.18; }
+
+/* ── Focus Ring ── */
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+}
+
+.text-balance { text-wrap: balance; }
+
+/* ── Ambient glow rings (like vivekrs.in hero) ── */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.ambient-glow-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(10, 80, 220, 0.18) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+
+.ambient-glow-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(80, 40, 200, 0.12) 0%, transparent 70%);
+  top: 100px; right: 50px;
+}
+
+.ambient-glow-3 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(10, 60, 180, 0.10) 0%, transparent 70%);
+  top: -50px; right: -200px;
+  border: 1px solid rgba(30, 80, 220, 0.08);
+}
+
+/* ── Section pill badge ── */
+.section-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.section-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* ── Bento card ── */
+.bento-card {
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 32px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Stat card ── */
+.stat-card {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 28px;
+}
+
+/* ── Project carousel card ── */
+.carousel-card {
+  width: 85vw;
+  max-width: 380px;
+  min-width: 280px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 24px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.carousel-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
+
+/* ── Typewriter cursor ── */
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: #00E5FF;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Mobile Layout Optimizations ── */
+@media (max-width: 640px) {
+  .macos-dock {
+    gap: 4px !important;
+    padding: 4px 6px !important;
+    border-radius: 16px !important;
+  }
+  .dock-item {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+  }
+  .dock-item svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .dock-tooltip {
+    display: none !important;
+  }
+}
+
