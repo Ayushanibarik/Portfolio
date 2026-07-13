@@ -3,7 +3,7 @@
 **AI Enthusiast • Full-Stack Developer • Builder • Engineering Student**
 
 - **Email:** [ayushanimeshbarik@gmail.com](mailto:ayushanimeshbarik@gmail.com)
-- **Phone:** +91 7894281460
+- **Instagram:** [__ayush.animesh__](https://www.instagram.com/__ayush.animesh__)
 - **Location:** Bhubaneswar, Odisha, India
 - **GitHub:** [github.com/Ayushanibarik](https://github.com/Ayushanibarik)
 - **LinkedIn:** [linkedin.com/in/ayushanimeshbarik](https://www.linkedin.com/in/ayushanimeshbarik)

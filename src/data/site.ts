@@ -9,10 +9,10 @@ import {
   GraduationCap,
   Layers3,
   Lightbulb,
+  Instagram,
   Linkedin,
   Mail,
   Map,
-  Phone,
   Rocket,
   ShieldCheck,
   Workflow,
@@ -56,7 +56,7 @@ export const site = {
   cgpa: "8.0",
   graduation: "2028",
   email: "ayushanimeshbarik@gmail.com",
-  phone: "+91 7894281460",
+  instagram: "https://www.instagram.com/__ayush.animesh__",
   github: "https://github.com/Ayushanibarik",
   linkedin: "https://www.linkedin.com/in/ayushanimeshbarik",
   resumePath: "/resume.pdf",
@@ -361,7 +361,12 @@ export const site = {
     openEmail: "Open Email",
     channels: [
       { label: "Email", value: "ayushanimeshbarik@gmail.com", href: "mailto:ayushanimeshbarik@gmail.com", icon: Mail },
-      { label: "Phone", value: "+91 7894281460", href: "tel:+917894281460", icon: Phone },
+      {
+        label: "Instagram",
+        value: "@__ayush.animesh__",
+        href: "https://www.instagram.com/__ayush.animesh__",
+        icon: Instagram
+      },
       { label: "GitHub", value: "github.com/Ayushanibarik", href: "https://github.com/Ayushanibarik", icon: Github },
       {
         label: "LinkedIn",

@@ -70,10 +70,12 @@ export function Footer() {
                 </a>
                 <span className="text-white/20">•</span>
                 <a
-                  href={`tel:${site.phone}`}
+                  href={site.instagram}
+                  target="_blank"
+                  rel="noreferrer"
                   className="text-[15px] font-medium text-white/60 hover:text-white transition-colors"
                 >
-                  Phone
+                  Instagram
                 </a>
                 <span className="text-white/20">•</span>
                 <a

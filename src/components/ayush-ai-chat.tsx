@@ -70,8 +70,8 @@ export function AyushAIChat() {
         reply = "SafeChoice is a Restaurant Trust Index and compliance platform built using Node.js and REST APIs. It organizes food safety compliance signals, consumer complaint workflows, and reporting into a unified trust rating score.";
       } else if (normalizedText.includes("skill") || normalizedText.includes("tech") || normalizedText.includes("languages")) {
         reply = "Ayush's skills cover Programming (Java, Python, JS, SQL), Backend frameworks (FastAPI, Flask, Node.js, Django), Frontend (React, Next.js, CSS, Tailwind), and AI engineering (NLP, Machine Learning, Reinforcement Learning, Agentic systems). Tools include Git, GitHub, Docker, and PostgreSQL.";
-      } else if (normalizedText.includes("contact") || normalizedText.includes("email") || normalizedText.includes("hire") || normalizedText.includes("phone")) {
-        reply = `You can connect with Ayush directly! Email him at ${site.email} or call him at ${site.phone}. Check the Dock at the bottom for his GitHub and LinkedIn links.`;
+      } else if (normalizedText.includes("contact") || normalizedText.includes("email") || normalizedText.includes("hire") || normalizedText.includes("instagram")) {
+        reply = `You can connect with Ayush directly! Email him at ${site.email} or visit his Instagram at ${site.instagram}. Check the Dock at the bottom for his GitHub and LinkedIn links.`;
       } else if (normalizedText.includes("cgpa") || normalizedText.includes("university") || normalizedText.includes("college") || normalizedText.includes("iter") || normalizedText.includes("study")) {
         reply = "Ayush is currently a B.Tech Computer Science student at ITER, SOA University (expected graduation 2028). He holds a strong CGPA of 8.0/10 and is actively involved in campus communities like the Innovation and Entrepreneurship Cell (IEC) and GFG student chapters.";
       } else {
