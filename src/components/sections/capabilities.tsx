@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Radio, Terminal } from "lucide-react";
+import { Github, Terminal } from "lucide-react";
 import { site } from "@/data/site";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -11,6 +11,7 @@ import {
   staggerItem,
 } from "@/components/ui/section-reveal";
 import { SpatialCard } from "@/components/ui/spatial-card";
+import { GithubContributions } from "@/components/github-contributions";
 
 export function SkillsCommunity() {
   return (
@@ -73,65 +74,41 @@ export function GithubSection() {
   return (
     <section className="px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <SpatialCard className="p-6 sm:p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-            <div>
-              <div className="mb-5 grid size-12 place-items-center rounded-ios-sm bg-fill-tertiary text-ink">
-                <Github aria-hidden="true" size={22} />
+        <SectionReveal>
+          <SpatialCard className="p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 mb-6 border-b border-separator-opaque/50">
+              <div className="flex items-start gap-4">
+                <div className="mt-1 grid size-12 shrink-0 place-items-center rounded-ios-sm bg-fill-tertiary text-ink">
+                  <Github aria-hidden="true" size={24} />
+                </div>
+                <div>
+                  <p className="ios-caption1 font-semibold uppercase tracking-[0.06em] text-emerald-400">
+                    {site.githubSection.title}
+                  </p>
+                  <h2 className="mt-1 ios-title1 text-ink">
+                    {site.githubSection.subtitle}
+                  </h2>
+                  <p className="mt-2 ios-body text-label-secondary max-w-2xl">
+                    An authentic, verifiable record of daily commits, experiments, system builds, and open-source contributions.
+                  </p>
+                </div>
               </div>
-              <p className="ios-caption1 font-semibold uppercase tracking-[0.06em] text-label-tertiary">
-                {site.githubSection.title}
-              </p>
-              <h2 className="mt-3 ios-title1 text-ink">
-                {site.githubSection.subtitle}
-              </h2>
-              <p className="mt-4 ios-body text-label-secondary">
-                A working record of experiments, product builds, AI systems, and
-                engineering practice.
-              </p>
-              <ButtonLink
-                href={site.github}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-7"
-                showArrow
-              >
-                {site.githubSection.cta}
-              </ButtonLink>
+
+              <div className="flex shrink-0 items-center gap-3">
+                <ButtonLink
+                  href={site.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  showArrow
+                >
+                  {site.githubSection.cta}
+                </ButtonLink>
+              </div>
             </div>
 
-            <div className="rounded-ios-lg border border-separator-opaque bg-canvas-tertiary p-4">
-              <div className="mb-4 flex items-center justify-between">
-                <span className="ios-subheadline font-semibold text-label-secondary">
-                  {site.githubSection.activityLabel}
-                </span>
-                <Radio
-                  aria-hidden="true"
-                  size={16}
-                  className="text-label-tertiary"
-                />
-              </div>
-              <div className="grid grid-cols-12 gap-1.5">
-                {Array.from({ length: 84 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="aspect-square rounded-[4px]"
-                    style={{
-                      background:
-                        index % 11 === 0
-                          ? "rgba(48, 209, 88, 0.65)"
-                          : index % 7 === 0
-                            ? "rgba(48, 209, 88, 0.45)"
-                            : index % 5 === 0
-                              ? "rgba(48, 209, 88, 0.25)"
-                              : "rgba(118, 118, 128, 0.18)",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </SpatialCard>
+            <GithubContributions />
+          </SpatialCard>
+        </SectionReveal>
       </div>
     </section>
   );

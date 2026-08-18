@@ -342,10 +342,10 @@ export const site = {
     "Improving engineering fundamentals"
   ],
   githubSection: {
-    title: "GitHub Profile",
-    subtitle: "Repository Highlights",
-    activityLabel: "Contribution Activity Placeholder",
-    cta: "View My GitHub"
+    title: "Engineering Velocity & Consistency",
+    subtitle: "Live GitHub Activity & Contributions",
+    activityLabel: "Verified GitHub Contribution Graph",
+    cta: "Explore GitHub Profile"
   },
   resume: {
     title: "Resume",
