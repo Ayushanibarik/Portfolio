@@ -174,6 +174,65 @@ export const site = {
       emphasis: "flagship"
     },
     {
+      name: "VayuNetra",
+      label: "Military C2 & C-UAS Platform",
+      title: "Autonomous Drone Detection, Multi-Sensor Kinematic Fusion & Tracking System",
+      problem:
+        "Airspace defense against rogue, high-speed, and low-altitude unauthorized UAS requires microsecond-latency detection, multi-sensor kinematic fusion, and autonomous tracking under dynamic battlefield conditions.",
+      solution:
+        "Built a military-grade Command & Control (C2) situational awareness and counter-unmanned aerial system (C-UAS) platform providing automated real-time drone detection, multi-sensor kinematic fusion, 3D trajectory forecasting, automated threat evaluation (TEWA), and pan-tilt tracking gimbal control.",
+      architecture:
+        "A high-performance pipeline combining YOLOv8 & ByteTrack optical computer vision with Extended Kalman Filter (EKF) sensor fusion, FMCW radar simulations, dynamic TEWA threat scoring, and an ESP32 microsecond PID servo gimbal bridge with a real-time WebSocket telemetry HUD.",
+      features: [
+        "Real-time drone detection with YOLOv8 & ByteTrack multi-object tracking",
+        "360° PPI tactical airspace radar scope with configurable engagement perimeters",
+        "3D isometric & multi-view trajectory forecasting using Constant-Velocity EKF",
+        "Dynamic TEWA threat evaluation matrix with Time-to-Impact (TTI) metrics",
+        "Hardware pan-tilt gimbal interface with ESP32 & closed-loop PID tracking",
+        "Multi-modal vision feeds (Optical, Simulated FLIR White-Hot, NVG Night Vision)"
+      ],
+      highlights: [
+        "YOLOv8 + ByteTrack Vision Engine",
+        "Kinematic EKF Sensor Fusion",
+        "360° PPI Tactical Radar Scope",
+        "3D Isometric Trajectory Prediction",
+        "TEWA Threat Scoring Matrix",
+        "ESP32 Closed-Loop PID Gimbal",
+        "FLIR & NVG Multi-Modal Stream",
+        "Real-Time WebSocket C2 Telemetry"
+      ],
+      technologies: [
+        "Python",
+        "FastAPI",
+        "PyTorch",
+        "YOLOv8",
+        "OpenCV",
+        "Extended Kalman Filter (EKF)",
+        "WebSockets",
+        "ESP32 / C++",
+        "HTML5 Canvas",
+        "JavaScript",
+        "CSS3"
+      ],
+      challenges: [
+        "Maintaining persistent target tracking IDs during optical occlusions and rapid aerial maneuvers",
+        "Fusing asynchronous optical bearing and FMCW radar Doppler velocities into a unified EKF state vector",
+        "Achieving sub-millisecond servo command streaming over serial to eliminate gimbal overshoot and lag"
+      ],
+      lessons: [
+        "Defensive AI demands deterministic state estimation and uncertainty covariance cones alongside raw neural network predictions.",
+        "Hardware-in-the-loop validation is vital for high-speed tracking pan-tilt mechanisms.",
+        "Real-time tactical consoles must prioritize low-latency telemetry visualization without dropping frames."
+      ],
+      future: [
+        "Integration with physical SDR RF spectrum analyzers for active countermeasure RF jamming",
+        "Edge deployment on NVIDIA Jetson Orin platforms for decentralized autonomous field units",
+        "Swarm threat vector interception algorithms and multi-gimbal coordinated defense"
+      ],
+      emphasis: "standard",
+      url: "https://github.com/Ayushanibarik/VayuNetra"
+    },
+    {
       name: "JanSevak",
       label: "AI Governance Platform",
       title: "AI-Powered Citizen Feedback & Prioritization System",
@@ -311,11 +370,11 @@ export const site = {
     }
   ] satisfies Project[],
   skills: [
-    { title: "Programming", items: ["Java", "Python", "JavaScript", "SQL"] },
-    { title: "Backend", items: ["FastAPI", "Flask", "Node.js", "Django"] },
+    { title: "Programming", items: ["Java", "Python", "JavaScript", "SQL", "C++"] },
+    { title: "Backend", items: ["FastAPI", "Flask", "Node.js", "Django", "WebSockets"] },
     { title: "Frontend", items: ["React", "Next.js", "HTML", "CSS", "Tailwind"] },
-    { title: "AI", items: ["Machine Learning", "NLP", "AI Agents", "Reinforcement Learning"] },
-    { title: "Tools", items: ["Git", "GitHub", "Docker", "PostgreSQL"] }
+    { title: "AI & CV", items: ["Computer Vision", "YOLOv8", "NLP", "Machine Learning", "AI Agents", "EKF Fusion"] },
+    { title: "Tools & Hardware", items: ["Git", "GitHub", "Docker", "PostgreSQL", "ESP32", "OpenCV"] }
   ] satisfies SkillGroup[],
   community: [
     "Operations Team Member, Innovation and Entrepreneurship Cell (IEC)",
@@ -330,7 +389,7 @@ export const site = {
     { year: "2026", text: "Participated in hackathons and innovation programs." },
     {
       year: "2026",
-      text: "Built AI systems, compliance intelligence platforms, and disaster response tools."
+      text: "Built AI systems, military C-UAS platforms, compliance intelligence systems, and disaster response tools."
     },
     { year: "Future", text: "Building technology ventures that solve meaningful problems." }
   ] satisfies TimelineItem[],

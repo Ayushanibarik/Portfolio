@@ -13,6 +13,7 @@ type Message = {
 };
 
 const promptSuggestions = [
+  { text: "Tell me about VayuNetra", query: "vayunetra" },
   { text: "Tell me about PRAMANIKA", query: "pramanika" },
   { text: "Tell me about SAVE", query: "save" },
   { text: "What are your core skills?", query: "skills" },
@@ -62,20 +63,24 @@ export function AyushAIChat() {
       const normalizedText = text.toLowerCase();
       let reply = "";
 
-      if (normalizedText.includes("pramanika")) {
+      if (normalizedText.includes("vayunetra") || normalizedText.includes("drone") || normalizedText.includes("c-uas") || normalizedText.includes("radar") || normalizedText.includes("defense")) {
+        reply = "VayuNetra (वायुNetra) is Ayush's military-grade Command & Control (C2) situational awareness and counter-UAS platform. It features real-time drone detection using YOLOv8 and ByteTrack, kinematic Extended Kalman Filter (EKF) sensor fusion with 360° PPI tactical radar scopes, 3D trajectory forecasting, TEWA threat evaluation, and hardware pan-tilt servo tracking over ESP32.";
+      } else if (normalizedText.includes("pramanika")) {
         reply = "PRAMANIKA is Ayush's flagship project: an AI-Powered Publication Title Verification System built under the Press Registration of Periodicals Act. It normalization processes and semantically matches titles across massive datasets using a high-fidelity 8-layer NLP pipeline (FastAPI, Sentence Transformers, spaCy, PyTorch) with a verification capability of 160K+ records.";
+      } else if (normalizedText.includes("jansevak") || normalizedText.includes("jan sevak") || normalizedText.includes("citizen") || normalizedText.includes("grievance")) {
+        reply = "JanSevak is an AI-powered Citizen Feedback & Prioritization System integrating NLP, OCR, and GIS (FastAPI, Flutter, Next.js, PostgreSQL/PostGIS, Llama 3) to objectively evaluate and prioritize public infrastructure grievances.";
       } else if (normalizedText.includes("save")) {
         reply = "SAVE (Strategic Evacuation System) is an AI-driven disaster response platform. It models victim triage and resource allocation using agent-based coordination and GIS maps (Python, Flask, Streamlit, OpenStreetMap), and integrates emergency voice broadcasts and notifications via Twilio APIs.";
       } else if (normalizedText.includes("safechoice") || normalizedText.includes("restaurant") || normalizedText.includes("trust")) {
         reply = "SafeChoice is a Restaurant Trust Index and compliance platform built using Node.js and REST APIs. It organizes food safety compliance signals, consumer complaint workflows, and reporting into a unified trust rating score.";
       } else if (normalizedText.includes("skill") || normalizedText.includes("tech") || normalizedText.includes("languages")) {
-        reply = "Ayush's skills cover Programming (Java, Python, JS, SQL), Backend frameworks (FastAPI, Flask, Node.js, Django), Frontend (React, Next.js, CSS, Tailwind), and AI engineering (NLP, Machine Learning, Reinforcement Learning, Agentic systems). Tools include Git, GitHub, Docker, and PostgreSQL.";
+        reply = "Ayush's skills cover Programming (Java, Python, JS, SQL, C++), Backend frameworks (FastAPI, Flask, Node.js, Django, WebSockets), Frontend (React, Next.js, CSS, Tailwind), and AI & CV (Computer Vision, YOLOv8, NLP, Machine Learning, EKF Sensor Fusion, AI Agents). Hardware & tools include ESP32, Docker, Git, and PostgreSQL.";
       } else if (normalizedText.includes("contact") || normalizedText.includes("email") || normalizedText.includes("hire") || normalizedText.includes("instagram")) {
         reply = `You can connect with Ayush directly! Email him at ${site.email} or visit his Instagram at ${site.instagram}. Check the Dock at the bottom for his GitHub and LinkedIn links.`;
       } else if (normalizedText.includes("cgpa") || normalizedText.includes("university") || normalizedText.includes("college") || normalizedText.includes("iter") || normalizedText.includes("study")) {
         reply = "Ayush is currently a B.Tech Computer Science student at ITER, SOA University (expected graduation 2028). He holds a strong CGPA of 8.0/10 and is actively involved in campus communities like the Innovation and Entrepreneurship Cell (IEC) and GFG student chapters.";
       } else {
-        reply = "I'm Ayush's AI Assistant! I can tell you about his projects (PRAMANIKA, SAVE, SafeChoice), his technical skills, CGPA, or how to contact him. Click one of the quick suggestions below or type a keyword!";
+        reply = "I'm Ayush's AI Assistant! I can tell you about his projects (VayuNetra, PRAMANIKA, JanSevak, SAVE, SafeChoice), his technical skills, CGPA, or how to contact him. Click one of the quick suggestions below or type a keyword!";
       }
 
       const aiMsg: Message = {
