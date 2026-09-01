@@ -19,7 +19,7 @@ function AnimatedCounter({
   value: number;
   suffix: string;
   color: string;
-}) {``
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [display, setDisplay] = useState(0);
