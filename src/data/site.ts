@@ -230,7 +230,7 @@ export const site = {
         "Swarm threat vector interception algorithms and multi-gimbal coordinated defense"
       ],
       emphasis: "standard",
-      url: "https://github.com/Ayushanibarik/VayuNetra"
+      url: "/vayunetra"
     },
     {
       name: "JanSevak",
@@ -284,7 +284,7 @@ export const site = {
         "Offline-first capabilities for remote rural reporting"
       ],
       emphasis: "standard",
-      url: "https://jan-sevak-xi.vercel.app/"
+      url: "/jansevak"
     },
     {
       name: "SAVE",
