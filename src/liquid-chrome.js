@@ -71,11 +71,11 @@ export function initLiquidChrome(canvasId, options = {}) {
         float dark = smoothstep(0.1, 0.3, f);
         
         col = mix(col, vec3(0.0), 1.0 - dark);
-        col = mix(col, vec3(0.1, 0.1, 0.12), highlight);
-        col = mix(col, vec3(0.2, 0.3, 0.35), highlight2);
+        col = mix(col, vec3(0.4, 0.45, 0.55), highlight);
+        col = mix(col, vec3(0.85, 0.9, 1.0), highlight2);
         
         float v = 16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
-        col *= 0.5 + 0.5 * pow(max(0.0, v), 0.2);
+        col *= 0.7 + 0.3 * pow(max(0.0, v), 0.15);
         gl_FragColor = vec4(col, 1.0);
       }
     `;

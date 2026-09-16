@@ -58,6 +58,15 @@ window.addEventListener("load", () => {
       },
       "a"
     )
+    .to(
+      "#bg-loader",
+      {
+        autoAlpha: 0,
+        duration: 1,
+        ease: "expo.inOut",
+      },
+      "a"
+    )
     .from(
       ".scaleImage",
       {
