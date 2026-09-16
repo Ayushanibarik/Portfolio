@@ -1,0 +1,40 @@
+
+@import "tailwindcss";
+
+@font-face {
+  font-family: "satoshi";
+  src: url("./Fonts/Satoshi-Regular.woff2");
+}
+
+h1,
+h3 {
+  font-family: "Staatliches", sans-serif;
+}
+h2,
+span {
+  font-family: "Stint Ultra Condensed", serif;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+h4,li {
+  font-family: "satoshi";
+}
+
+.projectPreview {
+  --moveX: 100%;
+  clip-path: inset(0 0 0 var(--moveX));
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.font-satoshi {
+  font-family: "satoshi", sans-serif !important;
+  text-transform: none;
+}
