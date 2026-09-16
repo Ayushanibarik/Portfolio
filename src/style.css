@@ -38,3 +38,16 @@ h4,li {
   font-family: "satoshi", sans-serif !important;
   text-transform: none;
 }
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-800 {
+  perspective: 800px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
