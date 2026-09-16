@@ -4,6 +4,8 @@ import { testimonialsData } from "./data/testimonials.js";
 import { initGithubGraph } from "./github-graph.js";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initSilkAurora, initMagnetLines, initClosingPlasma } from "./ambient-backgrounds.js";
+import { initLiquidChrome } from "./liquid-chrome.js";
+import { initPixelCanvas } from "./pixel-canvas.js";
 
 export function initPortfolioSections() {
   renderTechStack();
@@ -76,11 +78,27 @@ function initAmbientBackgrounds() {
         });
         if (cleanup) cleanups.push(cleanup);
       }
+
+      if (id === "projects" && !el._ambientInit) {
+        el._ambientInit = true;
+        const cleanup = initLiquidChrome("bg-projects", { baseColor: [0.03, 0.03, 0.04] });
+        if (cleanup) cleanups.push(cleanup);
+      }
+
+      if (id === "arsenal" && !el._ambientInit) {
+        el._ambientInit = true;
+        const cleanup = initPixelCanvas("bg-arsenal", { colors: ["#38bdf8", "#818cf8", "#2dd4bf", "#e879f9"], gap: 5, speed: 0.025 });
+        if (cleanup) cleanups.push(cleanup);
+      }
     });
   }, { threshold: 0.05 });
 
+  // Initialize loader background immediately since it's above the fold
+  const loaderCleanup = initLiquidChrome("bg-loader", { baseColor: [0.02, 0.02, 0.02] });
+  if (loaderCleanup) cleanups.push(loaderCleanup);
+
   // Observe the sections
-  ["experience", "endorsements", "contact"].forEach(id => {
+  ["experience", "endorsements", "contact", "projects", "arsenal"].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
@@ -340,12 +358,6 @@ function initOrbitCardDeck() {
   });
 
   cards.forEach((card, i) => {
-    card.addEventListener("mouseenter", () => {
-      if (isHovered) {
-        activeIndex = i;
-        updateCards(true);
-      }
-    });
     card.addEventListener("click", () => {
       activeIndex = i;
       isHovered = true;
