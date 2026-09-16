@@ -3,6 +3,7 @@ import { techStackData } from "./data/tech-logos.js";
 import { testimonialsData } from "./data/testimonials.js";
 import { initGithubGraph } from "./github-graph.js";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initSilkAurora, initMagnetLines, initClosingPlasma } from "./ambient-backgrounds.js";
 
 export function initPortfolioSections() {
   renderTechStack();
@@ -11,9 +12,78 @@ export function initPortfolioSections() {
   initVelocityScroll();
   initGithubGraph("github-graph-container");
   initMilestonesCounter();
+  initAmbientBackgrounds();
   setTimeout(() => {
     ScrollTrigger.refresh();
   }, 400);
+}
+
+// ==========================================
+// AMBIENT BACKGROUND EFFECTS (Lazy-loaded)
+// ==========================================
+function initAmbientBackgrounds() {
+  const cleanups = [];
+
+  // Lazy init: only start WebGL when section scrolls into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const id = el.id || el.getAttribute("data-ambient");
+
+      if (id === "endorsements" && !el._ambientInit) {
+        el._ambientInit = true;
+        const cleanup = initSilkAurora(el, {
+          baseColor: "#0a0a0f",
+          midColor: "#111320",
+          sheenColor: "#c9a87c",
+          accentColor: "#4dd8c0",
+          speed: 0.6,
+          intensity: 0.7,
+          grain: 0.6,
+          vignette: 1,
+          mouseInfluence: 0.8,
+        });
+        if (cleanup) cleanups.push(cleanup);
+      }
+
+      if (id === "experience" && !el._ambientInit) {
+        el._ambientInit = true;
+        const cleanup = initMagnetLines(el, {
+          rows: 12,
+          columns: 16,
+          lineColor: "rgba(77, 216, 192, 0.10)",
+          lineWidth: "1px",
+          lineHeight: "22px",
+          baseAngle: -45,
+        });
+        if (cleanup) cleanups.push(cleanup);
+      }
+
+      if (id === "contact" && !el._ambientInit) {
+        el._ambientInit = true;
+        const cleanup = initClosingPlasma(el, {
+          colorA: "#0a0a12",
+          colorB: "#162035",
+          colorC: "#3a5580",
+          speed: 0.8,
+          turbulence: 1.2,
+          mouseInfluence: 0.9,
+          grain: 0.8,
+          sparkle: 1.2,
+          vignette: 1,
+          opacity: 0.55,
+        });
+        if (cleanup) cleanups.push(cleanup);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe the sections
+  ["experience", "endorsements", "contact"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
 }
 
 // ==========================================

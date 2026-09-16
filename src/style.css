@@ -51,3 +51,17 @@ h4,li {
 .backface-hidden {
   backface-visibility: hidden;
 }
+
+/* Ambient backgrounds: section content floats above canvas/grid layers */
+#experience,
+#endorsements,
+#contact {
+  overflow: hidden;
+}
+
+#experience > *:not(canvas):not(.magnet-lines-bg),
+#endorsements > *:not(canvas),
+#contact > *:not(canvas) {
+  position: relative;
+  z-index: 1;
+}
