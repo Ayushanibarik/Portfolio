@@ -54,14 +54,12 @@ h4,li {
 
 /* Ambient backgrounds: section content floats above canvas/grid layers */
 #experience,
-#endorsements,
-#contact {
+#endorsements {
   overflow: hidden;
 }
 
 #experience > *:not(canvas):not(.magnet-lines-bg),
-#endorsements > *:not(canvas),
-#contact > *:not(canvas) {
+#endorsements > *:not(canvas) {
   position: relative;
   z-index: 1;
 }
