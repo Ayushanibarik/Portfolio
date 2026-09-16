@@ -1,156 +1,8 @@
-// Componentry UI Interactive Showcase Sandbox for Ayush Animesh Barik Portfolio
+// 3D Interactive Componentry Sandbox for Ayush Animesh Barik
 import gsap from 'gsap';
 
 // ==========================================
-// 1. ANNOTATED TEXT ENGINE (Hand-drawn SVG)
-// ==========================================
-function createRandom(seed) {
-  let state = seed >>> 0;
-  return function next() {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    return state / 4294967296;
-  };
-}
-
-function shake(rand, amount) {
-  return (rand() - 0.5) * 2 * amount;
-}
-
-function round(val) {
-  return Math.round(val * 100) / 100;
-}
-
-function trace(points, close = false) {
-  if (!points.length) return '';
-  const [first, ...rest] = points;
-  let d = `M${round(first.x)},${round(first.y)}`;
-  rest.forEach((anchor, index) => {
-    const next = rest[index + 1];
-    if (!next) {
-      d += ` L${round(anchor.x)},${round(anchor.y)}`;
-      return;
-    }
-    d += ` Q${round(anchor.x)},${round(anchor.y)} ${round((anchor.x + next.x) / 2)},${round((anchor.y + next.y) / 2)}`;
-  });
-  return close ? `${d} Z` : d;
-}
-
-export function generateAnnotationPath(type, width, height, seed = 42) {
-  const rand = createRandom(seed);
-  const pad = 6;
-  const w = width;
-  const h = height;
-
-  if (type === 'highlight') {
-    // A thick gentle highlighter stroke behind text
-    const y = h * 0.65;
-    const pts = [];
-    const steps = 14;
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      pts.push({
-        x: t * w + shake(rand, 1.5),
-        y: y + shake(rand, 2) + Math.sin(t * Math.PI) * 2
-      });
-    }
-    return trace(pts);
-  }
-
-  if (type === 'underline') {
-    // Wobbly hand-drawn underline
-    const y = h - 2;
-    const pts = [];
-    const steps = 16;
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      pts.push({
-        x: t * w,
-        y: y + shake(rand, 1.8)
-      });
-    }
-    return trace(pts);
-  }
-
-  if (type === 'circle') {
-    // Hand-drawn sketchy elliptical loop that slightly overlaps at the end
-    const cx = w / 2;
-    const cy = h / 2;
-    const rx = w / 2 + pad;
-    const ry = h / 2 + pad;
-    const pts = [];
-    const steps = 36;
-    for (let i = 0; i <= steps; i++) {
-      const angle = (i / steps) * Math.PI * 2 + (shake(rand, 0.1));
-      const wobbleR = shake(rand, 2.5);
-      pts.push({
-        x: cx + (rx + wobbleR) * Math.cos(angle),
-        y: cy + (ry + wobbleR) * Math.sin(angle)
-      });
-    }
-    return trace(pts, true);
-  }
-
-  if (type === 'box') {
-    // Hand-drawn sketch rectangle
-    const pts = [
-      { x: -pad, y: -pad },
-      { x: w + pad, y: -pad + shake(rand, 2) },
-      { x: w + pad + shake(rand, 2), y: h + pad },
-      { x: -pad + shake(rand, 2), y: h + pad + shake(rand, 2) }
-    ];
-    return trace(pts, true);
-  }
-
-  return '';
-}
-
-export function initAnnotatedText() {
-  const elements = document.querySelectorAll('[data-annotation]');
-  elements.forEach((el, idx) => {
-    const type = el.dataset.annotation || 'highlight';
-    const color = el.dataset.color || '#38bdf8';
-    const strokeWidth = type === 'highlight' ? '22' : '3.5';
-    const opacity = type === 'highlight' ? '0.45' : '1';
-
-    const w = el.offsetWidth || 120;
-    const h = el.offsetHeight || 30;
-
-    // Check if SVG already exists
-    let svg = el.querySelector('svg.annotation-svg');
-    if (!svg) {
-      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('class', 'annotation-svg absolute -inset-1 w-[calc(100%+8px)] h-[calc(100%+8px)] pointer-events-none overflow-visible -z-10');
-      el.style.position = 'relative';
-      el.style.display = 'inline-block';
-      el.appendChild(svg);
-    }
-
-    const pathData = generateAnnotationPath(type, w + 8, h + 8, 100 + idx * 77);
-    svg.innerHTML = `
-      <path d="${pathData}" fill="none" stroke="${color}" stroke-width="${strokeWidth}" 
-            stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}" 
-            class="annotation-path" />
-    `;
-
-    const path = svg.querySelector('path');
-    if (path) {
-      const length = path.getTotalLength() || 200;
-      path.style.strokeDasharray = length;
-      path.style.strokeDashoffset = length;
-
-      // Animate stroke draw
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        duration: 1.4,
-        ease: 'power2.out',
-        delay: 0.15 * idx
-      });
-    }
-  });
-}
-
-// ==========================================
-// 2. ORBIT CARD STACK ENGINE (3D Fan-out Deck)
+// 1. LOCKED: ORBIT CARD STACK (3D Interactive Deck)
 // ==========================================
 export function initOrbitCardStack() {
   const container = document.getElementById('orbit-deck-container');
@@ -158,7 +10,7 @@ export function initOrbitCardStack() {
 
   const cards = container.querySelectorAll('.orbit-card');
   const total = cards.length;
-  let activeIndex = Math.floor(total / 2);
+  let activeIndex = 1;
   let isHovered = false;
 
   function updateCards(hovered = isHovered) {
@@ -168,39 +20,43 @@ export function initOrbitCardStack() {
 
       let x = 0;
       let y = 0;
+      let z = 0;
       let rot = 0;
       let scale = 1;
       let zIndex = 10 - absOffset;
 
       if (!hovered) {
-        // Collapsed / semi-stacked state
-        x = offset * 32;
+        // Resting stacked state with 3D depth
+        x = offset * 36;
         y = absOffset * 10;
+        z = -absOffset * 40;
         rot = offset * 5;
         scale = 1 - absOffset * 0.05;
       } else {
-        // Expanded Orbit Fan-Out state
-        x = offset * 210; // wide spread across viewport
-        y = i === activeIndex ? -42 : absOffset * 8; // active lift
+        // 3D Orbit Fan-Out state
+        x = offset * 220; // wide spread
+        y = i === activeIndex ? -45 : absOffset * 8; // active card lifts in 3D
+        z = i === activeIndex ? 60 : -absOffset * 20;
         rot = offset * 3.5;
-        scale = i === activeIndex ? 1.08 : 0.94;
+        scale = i === activeIndex ? 1.08 : 0.95;
         if (i === activeIndex) zIndex = 50;
       }
 
       gsap.to(card, {
         x: x,
         y: y,
+        z: z,
         rotation: rot,
         scale: scale,
         zIndex: zIndex,
-        duration: 0.45,
+        duration: 0.5,
         ease: 'power3.out'
       });
 
       if (i === activeIndex && hovered) {
-        card.classList.add('ring-2', 'ring-cyan-400/60', 'shadow-2xl', 'shadow-cyan-500/20');
+        card.classList.add('ring-2', 'ring-cyan-400', 'shadow-2xl', 'shadow-cyan-500/25');
       } else {
-        card.classList.remove('ring-2', 'ring-cyan-400/60', 'shadow-2xl', 'shadow-cyan-500/20');
+        card.classList.remove('ring-2', 'ring-cyan-400', 'shadow-2xl', 'shadow-cyan-500/25');
       }
     });
   }
@@ -214,7 +70,7 @@ export function initOrbitCardStack() {
 
   container.addEventListener('mouseleave', () => {
     isHovered = false;
-    activeIndex = Math.floor(total / 2);
+    activeIndex = 1;
     updateCards(false);
   });
 
@@ -229,240 +85,7 @@ export function initOrbitCardStack() {
 }
 
 // ==========================================
-// 3. CIRCUIT BOARD ENGINE (Airspace Defense)
-// ==========================================
-export function initCircuitBoard() {
-  const canvas = document.getElementById('circuit-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  let width = (canvas.width = canvas.parentElement.offsetWidth || 800);
-  let height = (canvas.height = canvas.parentElement.offsetHeight || 380);
-
-  window.addEventListener('resize', () => {
-    if (!canvas.parentElement) return;
-    width = canvas.width = canvas.parentElement.offsetWidth || 800;
-    height = canvas.height = canvas.parentElement.offsetHeight || 380;
-  });
-
-  // Nodes for C-UAS & Autonomous Architecture
-  const nodes = [
-    { id: 'radar', x: width * 0.12, y: height * 0.25, label: 'RF Radar Sensor', color: '#38bdf8' },
-    { id: 'vision', x: width * 0.12, y: height * 0.75, label: 'EO/IR Vision (YOLOv8)', color: '#38bdf8' },
-    { id: 'fusion', x: width * 0.42, y: height * 0.5, label: 'Kalman Filter Fusion Core', color: '#a855f7' },
-    { id: 'c2', x: width * 0.72, y: height * 0.3, label: 'VayuNetra C2 Command', color: '#34d399' },
-    { id: 'mitigation', x: width * 0.88, y: height * 0.7, label: 'RF Jammer Neutralizer', color: '#f43f5e' }
-  ];
-
-  // Connections with orthogonal routing
-  const connections = [
-    { from: 0, to: 2, progress: 0, speed: 0.008, color: '#38bdf8' },
-    { from: 1, to: 2, progress: 0.5, speed: 0.007, color: '#38bdf8' },
-    { from: 2, to: 3, progress: 0.2, speed: 0.01, color: '#a855f7' },
-    { from: 3, to: 4, progress: 0.7, speed: 0.009, color: '#34d399' }
-  ];
-
-  function getOrthogonalPath(x1, y1, x2, y2) {
-    const midX = (x1 + x2) / 2;
-    return [
-      { x: x1, y: y1 },
-      { x: midX, y: y1 },
-      { x: midX, y: y2 },
-      { x: x2, y: y2 }
-    ];
-  }
-
-  function getPointAlongPath(pts, t) {
-    // Total length
-    let d1 = Math.abs(pts[1].x - pts[0].x) + Math.abs(pts[1].y - pts[0].y);
-    let d2 = Math.abs(pts[2].x - pts[1].x) + Math.abs(pts[2].y - pts[1].y);
-    let d3 = Math.abs(pts[3].x - pts[2].x) + Math.abs(pts[3].y - pts[2].y);
-    let total = d1 + d2 + d3;
-    let dist = t * total;
-
-    if (dist <= d1) {
-      let r = dist / d1;
-      return { x: pts[0].x + (pts[1].x - pts[0].x) * r, y: pts[0].y + (pts[1].y - pts[0].y) * r };
-    } else if (dist <= d1 + d2) {
-      let r = (dist - d1) / d2;
-      return { x: pts[1].x + (pts[2].x - pts[1].x) * r, y: pts[1].y + (pts[2].y - pts[1].y) * r };
-    } else {
-      let r = (dist - d1 - d2) / d3;
-      return { x: pts[2].x + (pts[3].x - pts[2].x) * r, y: pts[2].y + (pts[3].y - pts[2].y) * r };
-    }
-  }
-
-  let animFrame;
-  function render() {
-    ctx.clearRect(0, 0, width, height);
-
-    // Draw subtle grid dots
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-    for (let x = 20; x < width; x += 30) {
-      for (let y = 20; y < height; y += 30) {
-        ctx.fillRect(x, y, 1.5, 1.5);
-      }
-    }
-
-    // Draw traces
-    connections.forEach((conn) => {
-      const n1 = nodes[conn.from];
-      const n2 = nodes[conn.to];
-      const pts = getOrthogonalPath(n1.x, n1.y, n2.x, n2.y);
-
-      // Base line
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      ctx.lineTo(pts[1].x, pts[1].y);
-      ctx.lineTo(pts[2].x, pts[2].y);
-      ctx.lineTo(pts[3].x, pts[3].y);
-      ctx.stroke();
-
-      // Moving Pulse Dot
-      conn.progress = (conn.progress + conn.speed) % 1;
-      const p = getPointAlongPath(pts, conn.progress);
-
-      // Pulse Glow
-      const grad = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, 8);
-      grad.addColorStop(0, conn.color);
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Core white dot
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Draw Nodes
-    nodes.forEach((n) => {
-      // Outer ring
-      ctx.strokeStyle = n.color;
-      ctx.lineWidth = 2;
-      ctx.fillStyle = '#141618';
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, 14, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      // Inner pulse dot
-      ctx.fillStyle = n.color;
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, 5, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Label
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.font = '12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(n.label, n.x, n.y + 28);
-    });
-
-    animFrame = requestAnimationFrame(render);
-  }
-
-  render();
-}
-
-// ==========================================
-// 4. ANIMATED SIGNATURE ENGINE (Footer)
-// ==========================================
-export function initSignature() {
-  const path = document.getElementById('signature-path');
-  const btn = document.getElementById('replay-signature-btn');
-  if (!path) return;
-
-  function playSignature() {
-    const len = path.getTotalLength();
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-
-    gsap.to(path, {
-      strokeDashoffset: 0,
-      duration: 2.8,
-      ease: 'power2.inOut'
-    });
-  }
-
-  playSignature();
-
-  if (btn) {
-    btn.addEventListener('click', playSignature);
-  }
-}
-
-// ==========================================
-// 5. TEXT REPEL PHYSICS (Magnetic Force-field)
-// ==========================================
-export function initTextRepel() {
-  const container = document.getElementById('text-repel-container');
-  if (!container) return;
-
-  const letters = container.querySelectorAll('.repel-letter');
-  const radius = 120;
-  const strength = 45;
-
-  container.addEventListener('mousemove', (e) => {
-    const rect = container.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-
-    letters.forEach((span) => {
-      const lx = span.offsetLeft + span.offsetWidth / 2;
-      const ly = span.offsetTop + span.offsetHeight / 2;
-
-      const dx = lx - mx;
-      const dy = ly - my;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < radius && dist > 0) {
-        const force = (1 - dist / radius) * strength;
-        const moveX = (dx / dist) * force;
-        const moveY = (dy / dist) * force;
-        const rot = moveX * 0.4;
-
-        gsap.to(span, {
-          x: moveX,
-          y: moveY,
-          rotation: rot,
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-      } else {
-        gsap.to(span, {
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 0.6,
-          ease: 'elastic.out(1, 0.4)',
-          overwrite: 'auto'
-        });
-      }
-    });
-  });
-
-  container.addEventListener('mouseleave', () => {
-    letters.forEach((span) => {
-      gsap.to(span, {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        duration: 0.8,
-        ease: 'elastic.out(1, 0.3)'
-      });
-    });
-  });
-}
-
-// ==========================================
-// 6. VELOCITY SCROLL TICKER
+// 2. LOCKED: VELOCITY SCROLL TICKER
 // ==========================================
 export function initVelocityScroll() {
   const track = document.getElementById('velocity-track');
@@ -473,11 +96,11 @@ export function initVelocityScroll() {
   let offset = 0;
 
   window.addEventListener('scroll', () => {
-    currentSpeed = baseSpeed + Math.abs(window.scrollY * 0.005);
+    currentSpeed = baseSpeed + Math.abs(window.scrollY * 0.006);
   });
 
   function tick() {
-    currentSpeed += (baseSpeed - currentSpeed) * 0.05; // smooth back to base
+    currentSpeed += (baseSpeed - currentSpeed) * 0.05;
     offset -= currentSpeed;
     if (offset <= -50) offset = 0;
     track.style.transform = `translateX(${offset}%)`;
@@ -487,12 +110,272 @@ export function initVelocityScroll() {
   tick();
 }
 
-// Initialize on DOM load
+// ==========================================
+// 3. NEW 3D: WHEEL CAROUSEL (3D Cylindrical Drum Picker)
+// ==========================================
+export function initWheelCarousel() {
+  const container = document.getElementById('wheel-carousel-container');
+  const previewImg = document.getElementById('wheel-preview-img');
+  const previewTitle = document.getElementById('wheel-preview-title');
+  const previewTag = document.getElementById('wheel-preview-tag');
+  if (!container) return;
+
+  const items = [
+    { label: "PRAMANIKA", tag: "AI Title Verification & Admissibility", image: "/Images/Projects.png" },
+    { label: "VAYUNETRA", tag: "Autonomous Airspace C2 & Defense", image: "/Images/goaPolice.png" },
+    { label: "JANSEVAK", tag: "Multilingual Citizen Grievance AI", image: "/Images/LandingPicture.png" },
+    { label: "ASTRARISE", tag: "Institutional Space & Aerospace Labs", image: "/Images/Astrarise.png" },
+    { label: "ZEIGARNIK", tag: "Cognitive Focus & Task Momentum", image: "/Images/Zeigarnik Tumbnail.png" }
+  ];
+
+  const total = items.length;
+  let currentAngle = 0;
+  let targetAngle = 0;
+  let isDragging = false;
+  let startY = 0;
+  let lastY = 0;
+  let velocityY = 0;
+  const itemAngle = 360 / total;
+  const radius = 180; // cylinder radius in px
+
+  const wheelItemsContainer = document.getElementById('wheel-items-container');
+  if (!wheelItemsContainer) return;
+
+  wheelItemsContainer.innerHTML = '';
+  const itemEls = [];
+
+  items.forEach((item, index) => {
+    const el = document.createElement('div');
+    el.className = 'wheel-item absolute left-0 right-0 h-12 flex items-center justify-center cursor-pointer select-none font-display text-2xl md:text-3xl tracking-wider transition-colors';
+    el.innerText = item.label;
+    el.style.transformOrigin = `50% 50% -${radius}px`;
+    el.addEventListener('click', () => {
+      targetAngle = -index * itemAngle;
+    });
+    wheelItemsContainer.appendChild(el);
+    itemEls.push(el);
+  });
+
+  function getActiveIndex() {
+    let normalized = ((-targetAngle / itemAngle) % total + total) % total;
+    return Math.round(normalized) % total;
+  }
+
+  let activeIdx = 0;
+  function updatePreview() {
+    const idx = getActiveIndex();
+    if (idx !== activeIdx) {
+      activeIdx = idx;
+      const data = items[activeIdx];
+      if (previewTitle) previewTitle.innerText = data.label;
+      if (previewTag) previewTag.innerText = data.tag;
+      if (previewImg) {
+        gsap.to(previewImg, {
+          opacity: 0,
+          scale: 0.96,
+          duration: 0.15,
+          onComplete: () => {
+            previewImg.src = data.image;
+            gsap.to(previewImg, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' });
+          }
+        });
+      }
+    }
+  }
+
+  function renderWheel() {
+    currentAngle += (targetAngle - currentAngle) * 0.12;
+
+    itemEls.forEach((el, i) => {
+      const angle = i * itemAngle + currentAngle;
+      const rad = (angle * Math.PI) / 180;
+      // Cosine determines distance to viewer
+      const depth = Math.cos(rad);
+      const opacity = Math.max(0.15, (depth + 1) / 2);
+      const isFront = depth > 0.85;
+
+      el.style.transform = `rotateX(${-angle}deg) translateZ(${radius}px)`;
+      el.style.opacity = isFront ? 1 : opacity * 0.5;
+
+      if (isFront) {
+        el.classList.add('text-cyan-400');
+        el.classList.remove('text-zinc-500');
+      } else {
+        el.classList.remove('text-cyan-400');
+        el.classList.add('text-zinc-500');
+      }
+    });
+
+    updatePreview();
+    requestAnimationFrame(renderWheel);
+  }
+
+  renderWheel();
+
+  // Mouse Drag / Touch interactions
+  container.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    lastY = e.clientY;
+    velocityY = 0;
+    container.setPointerCapture(e.pointerId);
+  });
+
+  container.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const dy = e.clientY - lastY;
+    lastY = e.clientY;
+    velocityY = dy;
+    targetAngle += dy * 0.35;
+  });
+
+  container.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    // Inertial snap to nearest item
+    targetAngle += velocityY * 1.5;
+    targetAngle = Math.round(targetAngle / itemAngle) * itemAngle;
+  });
+
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    targetAngle += e.deltaY * 0.15;
+    targetAngle = Math.round(targetAngle / itemAngle) * itemAngle;
+  }, { passive: false });
+}
+
+// ==========================================
+// 4. NEW 3D: SPLIT-FLAP MECHANICAL DISPLAY (3D Mechanical C2 Board)
+// ==========================================
+export function initSplitFlap() {
+  const board = document.getElementById('split-flap-board');
+  if (!board) return;
+
+  const lines = [
+    { label: "MISSION", val: "AIRSPACE DEFENSE" },
+    { label: "C2 CORE", val: "VAYUNETRA 2.0" },
+    { label: "ESTIMATOR", val: "KALMAN FUSION" },
+    { label: "STATUS", val: "100% OPERATIONAL" }
+  ];
+
+  const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%.-+:";
+
+  function buildRow(label, text, width = 18) {
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-3 py-1.5';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'w-24 text-right font-mono text-xs text-zinc-500 tracking-wider uppercase';
+    lbl.innerText = label;
+    row.appendChild(lbl);
+
+    const flapContainer = document.createElement('div');
+    flapContainer.className = 'flex gap-1 [perspective:400px]';
+
+    const padded = text.toUpperCase().padEnd(width, ' ').slice(0, width);
+
+    for (let i = 0; i < width; i++) {
+      const char = padded[i];
+      const cell = document.createElement('div');
+      cell.className = 'flap-cell relative w-6 md:w-7 h-9 md:h-10 bg-[#08090a] rounded border border-white/15 flex items-center justify-center font-mono font-bold text-sm md:text-base text-cyan-300 shadow-md overflow-hidden';
+      cell.style.transformStyle = 'preserve-3d';
+
+      cell.innerHTML = `
+        <div class="flap-top absolute top-0 left-0 right-0 h-1/2 bg-[#0c0e10] border-b border-black/60 overflow-hidden flex items-start justify-center">
+          <span class="translate-y-0.5">${char}</span>
+        </div>
+        <div class="flap-bottom absolute bottom-0 left-0 right-0 h-1/2 bg-[#08090a] overflow-hidden flex items-end justify-center">
+          <span class="-translate-y-0.5">${char}</span>
+        </div>
+        <div class="flap-flipper absolute inset-0 flex items-center justify-center pointer-events-none opacity-0">
+          <span>${char}</span>
+        </div>
+      `;
+
+      // Animate flip cascade
+      setTimeout(() => {
+        gsap.fromTo(cell, 
+          { rotateX: -90, opacity: 0.4 }, 
+          { rotateX: 0, opacity: 1, duration: 0.35, ease: 'back.out(2)' }
+        );
+      }, i * 45 + Math.random() * 50);
+
+      flapContainer.appendChild(cell);
+    }
+
+    row.appendChild(flapContainer);
+    return row;
+  }
+
+  function renderBoard() {
+    board.innerHTML = '';
+    lines.forEach((line) => {
+      board.appendChild(buildRow(line.label, line.val));
+    });
+  }
+
+  renderBoard();
+
+  const triggerBtn = document.getElementById('flap-retrigger-btn');
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', renderBoard);
+  }
+}
+
+// ==========================================
+// 5. NEW 3D: SPATIAL 3D PARALLAX TILT CARDS
+// ==========================================
+export function init3DTiltCards() {
+  const cards = document.querySelectorAll('.card-3d-tilt');
+  cards.forEach((card) => {
+    const glare = card.querySelector('.glare-overlay');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -14;
+      const rotateY = ((x - centerX) / centerX) * 14;
+
+      gsap.to(card, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        transformPerspective: 1000,
+        scale: 1.03,
+        duration: 0.2,
+        ease: 'power2.out'
+      });
+
+      if (glare) {
+        const glareX = (x / rect.width) * 100;
+        const glareY = (y / rect.height) * 100;
+        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 65%)`;
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.4)'
+      });
+      if (glare) {
+        glare.style.background = 'transparent';
+      }
+    });
+  });
+}
+
+// Run on DOM load
 window.addEventListener('DOMContentLoaded', () => {
-  initAnnotatedText();
   initOrbitCardStack();
-  initCircuitBoard();
-  initSignature();
-  initTextRepel();
   initVelocityScroll();
+  initWheelCarousel();
+  initSplitFlap();
+  init3DTiltCards();
 });
