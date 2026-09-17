@@ -209,7 +209,7 @@ function renderTestimonials() {
                 <!-- Top Row -->
                 <div class="flex items-center justify-between gap-3 pb-4 border-b border-white/10 mb-4 flex-wrap">
                   <div class="flex items-center gap-2.5">
-                    <span class="text-cyan-300 font-mono text-[11px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-400/20 font-semibold">
+                    <span class="text-white font-satoshi text-xs font-medium px-3 py-1 rounded-full bg-white/10 border border-white/20 tracking-normal">
                       ${t.highlight}
                     </span>
                   </div>
@@ -229,7 +229,7 @@ function renderTestimonials() {
                   </div>
                   <div>
                     <h4 class="text-white text-base md:text-lg font-bold tracking-wide font-satoshi">${t.author}</h4>
-                    <p class="text-white/60 text-xs font-satoshi">${t.role} <span class="text-white/40">•</span> <span class="text-white font-medium">${t.organization}</span></p>
+                    <p class="text-white/60 text-xs font-satoshi">${t.role} <span class="text-white/40 font-satoshi">•</span> <span class="text-white font-semibold font-satoshi">${t.organization}</span></p>
                   </div>
                 </div>
               </div>
