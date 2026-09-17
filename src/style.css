@@ -52,14 +52,24 @@ h4,li {
   backface-visibility: hidden;
 }
 
-/* Ambient backgrounds: section content floats above canvas/grid layers */
+/* Authentic backgrounds: section content floats above background image layers */
 #experience,
-#endorsements {
+#endorsements,
+#arsenal {
   overflow: hidden;
 }
 
-#experience > *:not(canvas):not(.magnet-lines-bg),
-#endorsements > *:not(canvas) {
+#experience > *:not(canvas):not(.magnet-lines-bg):not(.section-bg-layer),
+#endorsements > *:not(canvas):not(.section-bg-layer),
+#arsenal > *:not(canvas):not(.section-bg-layer) {
   position: relative;
   z-index: 1;
+}
+
+.section-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }

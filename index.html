@@ -529,17 +529,16 @@
               id="projects"
               class="page2 projects relative h-[70vh] md:h-screen w-full overflow-hidden"
             >
-              <canvas id="bg-projects" class="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none"></canvas>
               <div class="image-div h-screen overflow-hidden w-full relative">
                 <img
                   data-speed="0.5"
                   class="h-screen w-full scale-[1] object-cover"
-                  data-src="./Images/Projects.png"
-                  src="./Images/Projects.png"
+                  data-src="./Images/projects-bg.jpg"
+                  src="./Images/projects-bg.jpg"
                   alt="Infrastructure & AI Systems Architecture"
                 />
                 <!-- Atmospheric gradient overlay for real tech background depth & readability -->
-                <div class="absolute inset-0 bg-gradient-to-b from-[#141618]/75 via-[#141618]/40 to-[#141618] pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-[#141618]/80 via-[#141618]/50 to-[#141618] pointer-events-none"></div>
               </div>
               <div
                 class="projectPreview absolute right-[1.5vw] top-[38%] translate-y-[-50%] h-[35%] md:h-[50%] w-full md:w-[44%] bg-zinc-900"
@@ -662,8 +661,18 @@
             <!-- Work Experience Section -->
             <div
               id="experience"
-              class="page-experience relative min-h-screen w-full bg-[#141618] px-[2vw] md:px-[3.5vw] py-[6vw] md:py-[4vw] border-t border-white/10"
+              class="page-experience relative min-h-screen w-full bg-[#141618] px-[2vw] md:px-[3.5vw] py-[6vw] md:py-[4vw] border-t border-white/10 overflow-hidden"
             >
+              <!-- Authentic Background Photo & Atmospheric Overlay -->
+              <div class="section-bg-layer">
+                <img
+                  class="h-full w-full object-cover opacity-20 object-center"
+                  data-src="./Images/experience-bg.jpg"
+                  src="./Images/experience-bg.jpg"
+                  alt="Engineering Work Experience Workspace"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-[#141618]/90 via-[#141618]/70 to-[#141618]"></div>
+              </div>
               <div
                 class="flex flex-col md:flex-row md:items-end justify-between mb-[4vw] md:mb-[2.5vw]"
               >
@@ -790,7 +799,17 @@
               id="arsenal"
               class="page-arsenal relative min-h-screen w-full bg-[#141618] px-[2vw] md:px-[3.5vw] py-[6vw] md:py-[4vw] border-t border-white/10 overflow-hidden"
             >
-              <canvas id="bg-arsenal" class="absolute inset-0 w-full h-full z-0 opacity-40 pointer-events-none"></canvas>
+              <!-- Authentic Background Photo & Atmospheric Overlay -->
+              <div class="section-bg-layer">
+                <img
+                  class="h-full w-full object-cover opacity-25 object-center"
+                  data-src="./Images/tools-bg.jpg"
+                  src="./Images/tools-bg.jpg"
+                  alt="Developer Tools and Hardware Architecture"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-[#141618]/90 via-[#141618]/75 to-[#141618]"></div>
+              </div>
+              <canvas id="bg-arsenal" class="absolute inset-0 w-full h-full z-0 opacity-30 pointer-events-none"></canvas>
               <div
                 class="flex flex-col md:flex-row md:items-end justify-between mb-[4vw] md:mb-[2.5vw]"
               >
@@ -930,8 +949,18 @@
             <!-- Collaborator Endorsements Section -->
             <div
               id="endorsements"
-              class="page-endorsements relative min-h-[70vh] md:min-h-[80vh] w-full bg-[#141618] px-[2vw] md:px-[3.5vw] py-[6vw] md:py-[4vw] border-t border-white/10"
+              class="page-endorsements relative min-h-[70vh] md:min-h-[80vh] w-full bg-[#141618] px-[2vw] md:px-[3.5vw] py-[6vw] md:py-[4vw] border-t border-white/10 overflow-hidden"
             >
+              <!-- Authentic Background Photo & Atmospheric Overlay -->
+              <div class="section-bg-layer">
+                <img
+                  class="h-full w-full object-cover opacity-25 object-center"
+                  data-src="./Images/endorsements-bg.jpg"
+                  src="./Images/endorsements-bg.jpg"
+                  alt="Collaborators and Engineering Teammates"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-[#141618]/90 via-[#141618]/70 to-[#141618]"></div>
+              </div>
               <div
                 class="flex flex-col md:flex-row md:items-end justify-between mb-[3vw] md:mb-[2vw]"
               >

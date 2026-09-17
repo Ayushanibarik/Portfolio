@@ -33,22 +33,6 @@ function initAmbientBackgrounds() {
       const el = entry.target;
       const id = el.id || el.getAttribute("data-ambient");
 
-      if (id === "endorsements" && !el._ambientInit) {
-        el._ambientInit = true;
-        const cleanup = initSilkAurora(el, {
-          baseColor: "#0a0a0f",
-          midColor: "#111320",
-          sheenColor: "#c9a87c",
-          accentColor: "#4dd8c0",
-          speed: 0.6,
-          intensity: 0.7,
-          grain: 0.6,
-          vignette: 1,
-          mouseInfluence: 0.8,
-        });
-        if (cleanup) cleanups.push(cleanup);
-      }
-
       if (id === "experience" && !el._ambientInit) {
         el._ambientInit = true;
         const cleanup = initMagnetLines(el, {
@@ -79,12 +63,6 @@ function initAmbientBackgrounds() {
         if (cleanup) cleanups.push(cleanup);
       }
 
-      if (id === "projects" && !el._ambientInit) {
-        el._ambientInit = true;
-        const cleanup = initLiquidChrome("bg-projects", { baseColor: [0.03, 0.03, 0.04] });
-        if (cleanup) cleanups.push(cleanup);
-      }
-
       if (id === "arsenal" && !el._ambientInit) {
         el._ambientInit = true;
         const cleanup = initPixelCanvas("bg-arsenal", { colors: ["#38bdf8", "#818cf8", "#2dd4bf", "#e879f9"], gap: 5, speed: 0.025 });
@@ -98,7 +76,7 @@ function initAmbientBackgrounds() {
   if (loaderCleanup) cleanups.push(loaderCleanup);
 
   // Observe the sections
-  ["experience", "endorsements", "contact", "projects", "arsenal"].forEach(id => {
+  ["experience", "contact", "arsenal"].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
