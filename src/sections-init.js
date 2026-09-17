@@ -3,9 +3,7 @@ import { techStackData } from "./data/tech-logos.js";
 import { testimonialsData } from "./data/testimonials.js";
 import { initGithubGraph } from "./github-graph.js";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { initSilkAurora, initMagnetLines, initClosingPlasma } from "./ambient-backgrounds.js";
 import { initLiquidChrome } from "./liquid-chrome.js";
-import { initPixelCanvas } from "./pixel-canvas.js";
 
 export function initPortfolioSections() {
   renderTechStack();
@@ -26,60 +24,11 @@ export function initPortfolioSections() {
 function initAmbientBackgrounds() {
   const cleanups = [];
 
-  // Lazy init: only start WebGL when section scrolls into view
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const id = el.id || el.getAttribute("data-ambient");
-
-      if (id === "experience" && !el._ambientInit) {
-        el._ambientInit = true;
-        const cleanup = initMagnetLines(el, {
-          rows: 12,
-          columns: 16,
-          lineColor: "rgba(77, 216, 192, 0.10)",
-          lineWidth: "1px",
-          lineHeight: "22px",
-          baseAngle: -45,
-        });
-        if (cleanup) cleanups.push(cleanup);
-      }
-
-      if (id === "contact" && !el._ambientInit) {
-        el._ambientInit = true;
-        const cleanup = initClosingPlasma(el, {
-          colorA: "#0a0a12",
-          colorB: "#162035",
-          colorC: "#3a5580",
-          speed: 0.8,
-          turbulence: 1.2,
-          mouseInfluence: 0.9,
-          grain: 0.8,
-          sparkle: 1.2,
-          vignette: 1,
-          opacity: 0.55,
-        });
-        if (cleanup) cleanups.push(cleanup);
-      }
-
-      if (id === "arsenal" && !el._ambientInit) {
-        el._ambientInit = true;
-        const cleanup = initPixelCanvas("bg-arsenal", { colors: ["#38bdf8", "#818cf8", "#2dd4bf", "#e879f9"], gap: 5, speed: 0.025 });
-        if (cleanup) cleanups.push(cleanup);
-      }
-    });
-  }, { threshold: 0.05 });
-
   // Initialize loader background immediately since it's above the fold
   const loaderCleanup = initLiquidChrome("bg-loader", { baseColor: [0.02, 0.02, 0.02] });
   if (loaderCleanup) cleanups.push(loaderCleanup);
 
-  // Observe the sections
-  ["experience", "contact", "arsenal"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) observer.observe(el);
-  });
+  return () => cleanups.forEach(fn => fn && fn());
 }
 
 // ==========================================
