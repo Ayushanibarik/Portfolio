@@ -213,10 +213,6 @@ function renderTestimonials() {
                       ${t.highlight}
                     </span>
                   </div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-white/40 font-mono text-xs tracking-widest">0${idx + 1} / 0${testimonialsData.length}</span>
-                    <svg class="w-5 h-5 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                  </div>
                 </div>
 
                 <!-- Testimonial Quote -->
@@ -236,10 +232,6 @@ function renderTestimonials() {
                     <p class="text-white/60 text-xs font-satoshi">${t.role} <span class="text-white/40">•</span> <span class="text-white font-medium">${t.organization}</span></p>
                   </div>
                 </div>
-                <div class="flex items-center gap-1.5 flex-shrink-0">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-white/60 text-[11px] font-mono hidden sm:inline">Verified</span>
-                </div>
               </div>
             </div>
           `).join("")}
@@ -247,7 +239,7 @@ function renderTestimonials() {
       </div>
 
       <!-- Controls & Indicator Dots -->
-      <div class="flex items-center justify-between w-full max-w-[520px] mt-3 px-3">
+      <div class="flex items-center justify-center w-full max-w-[520px] mt-3 px-3">
         <div class="flex items-center gap-2" id="orbit-dots-container">
           ${testimonialsData.map((_, i) => `
             <button 
@@ -256,12 +248,6 @@ function renderTestimonials() {
               aria-label="Go to endorsement ${i + 1}"
             ></button>
           `).join("")}
-        </div>
-        <div class="flex items-center gap-3">
-          <span id="orbit-counter" class="text-xs font-mono text-white/50 tracking-wider">
-            01 / 0${testimonialsData.length}
-          </span>
-          <span class="text-[11px] font-mono text-cyan-400/80 hidden sm:inline">✦ Fan-out Orbit Deck</span>
         </div>
       </div>
     </div>
@@ -276,7 +262,6 @@ function initOrbitCardDeck() {
 
   const cards = container.querySelectorAll(".orbit-card");
   const dots = document.querySelectorAll(".orbit-dot");
-  const counterEl = document.getElementById("orbit-counter");
   const total = cards.length;
   let activeIndex = 0;
   let isHovered = false;
@@ -331,10 +316,6 @@ function initOrbitCardDeck() {
         card.classList.remove("ring-2", "ring-cyan-400", "shadow-2xl", "shadow-cyan-500/25");
       }
     });
-
-    if (counterEl) {
-      counterEl.textContent = `0${activeIndex + 1} / 0${total}`;
-    }
 
     dots.forEach((dot, idx) => {
       if (idx === activeIndex) {
